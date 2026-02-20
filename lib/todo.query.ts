@@ -1,15 +1,16 @@
 'use server';
 
 import prisma from '@/lib/prisma';
+import { Todo } from '@prisma/client';
 
 export async function fetchTodos(
   itemsPerPage: number,
   skip: number,
-) {
- return await prisma.todo.findMany({
+): Promise<Todo[]> {
+  return prisma.todo.findMany({
     orderBy: { createdAt: 'desc' },
     take: itemsPerPage,
-    skip: skip,
+    skip,
   });
 }
 
