@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import SearchTodo from '../ui/search-todo';
 import TodoItems from '../ui/todo-items';
+import { Todo } from '@prisma/client';
 
 export default async function Page(props: {
   searchParams?: Promise<{ query?: string; page?: string }>;
@@ -8,7 +9,7 @@ export default async function Page(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
 
-  const todos = await prisma.todo.findMany({
+  const todos: Todo[] = await prisma.todo.findMany({
     where: {
       title: {
         contains: query,
